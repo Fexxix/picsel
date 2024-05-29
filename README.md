@@ -2,15 +2,15 @@
 
 ## Todo
 
-[x] deploy to vercel
-[x] setup shadcn ui
-[ ] make a mock ui
-[ ] add auth with vercel
-[ ] setup mongodb
-[ ] setup uploadthing
-[ ] connect mongodb with ui
-[ ] add image upload
-[ ] use "taint"
-[ ] parallel route
-[ ] infinite scroll
-[ ] add collections (folders)
+- [x] deploy to vercel
+- [x] setup shadcn ui
+- [ ] make a mock ui
+- [ ] add auth with vercel
+- [ ] setup mongodb
+- [ ] setup uploadthing
+- [ ] connect mongodb with ui
+- [ ] add image upload
+- [ ] use "taint"
+- [ ] parallel route
+- [ ] infinite scroll
+- [ ] add collections (folders)
