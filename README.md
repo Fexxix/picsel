@@ -2,8 +2,8 @@
 
 ## Todo
 
-[ ] deploy to vercel
-[ ] setup shadcn ui
+[x] deploy to vercel
+[x] setup shadcn ui
 [ ] make a mock ui
 [ ] add auth with vercel
 [ ] setup mongodb
