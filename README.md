@@ -7,6 +7,7 @@
 [ ] make a mock ui
 [ ] add auth with vercel
 [ ] setup mongodb
+[ ] setup uploadthing
 [ ] connect mongodb with ui
 [ ] add image upload
 [ ] use "taint"

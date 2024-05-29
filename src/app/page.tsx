@@ -1,3 +1,5 @@
+import { ThemeToggler } from "@/components/theme-toggler"
+
 export default function Home() {
-  return <h1>Hello</h1>
+  return <ThemeToggler />
 }
