@@ -6,7 +6,8 @@
 - [x] setup shadcn ui
 - [ ] make a mock ui
 - [x] add auth with clerk
-- [ ] setup mongodb
+- [x] setup mongodb
+- [x] make models and add some data with mongoose (onboarding)
 - [ ] setup uploadthing
 - [ ] connect mongodb with ui
 - [ ] add image upload

@@ -2,7 +2,13 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Images } from "lucide-react"
 import { ThemeToggler } from "./theme-toggler"
-import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs"
+import {
+  SignedOut,
+  SignInButton,
+  SignedIn,
+  UserButton,
+  SignUpButton,
+} from "@clerk/nextjs"
 
 export function Header() {
   return (
