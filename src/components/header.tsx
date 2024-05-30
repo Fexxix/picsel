@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Images } from "lucide-react"
 import { ThemeToggler } from "./theme-toggler"
+import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs"
 
 export function Header() {
   return (
@@ -11,7 +12,12 @@ export function Header() {
         <span className="text-lg font-medium">Picsel</span>
       </Link>
       <div className="flex gap-3 items-center">
-        <Button size="sm">Sign In</Button>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
         <ThemeToggler />
       </div>
     </header>
