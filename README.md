@@ -5,7 +5,7 @@
 - [x] deploy to vercel
 - [x] setup shadcn ui
 - [ ] make a mock ui
-- [x] add auth with vercel
+- [x] add auth with clerk
 - [ ] setup mongodb
 - [ ] setup uploadthing
 - [ ] connect mongodb with ui
