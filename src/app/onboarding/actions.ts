@@ -1,25 +1,25 @@
-"use server"
+"use server";
 
-import { redirect } from "next/navigation"
-import UserModel from "@/models/UserModel"
-import { auth, clerkClient } from "@clerk/nextjs/server"
-import CollectionModel from "@/models/CollectionModel"
-import { connectToDatabase } from "@/lib/mongodb"
+import { redirect } from "next/navigation";
+import UserModel from "@/models/UserModel";
+import { auth, clerkClient } from "@clerk/nextjs/server";
+import CollectionModel from "@/models/CollectionModel";
+import { connectToDatabase } from "@/lib/mongodb";
 
 export async function completeOnboarding() {
-  const user = auth()
+  const user = auth();
 
   if (!user.userId) {
-    return { error: "Not signed in!" }
+    return { error: "Not signed in!" };
   }
 
   try {
-    await connectToDatabase()
+    await connectToDatabase();
 
-    const exists = await UserModel.exists({ _id: user.userId })
+    const exists = await UserModel.exists({ _id: user.userId });
 
     if (exists) {
-      return { error: "User already exists!" }
+      return { error: "User already exists!" };
     }
 
     const [userDoc, defaultCollection] = await Promise.all([
@@ -28,22 +28,22 @@ export async function completeOnboarding() {
         name: "Your Collection",
         images: [],
       }),
-    ])
+    ]);
 
-    userDoc.collections.push(defaultCollection._id)
+    userDoc.collections.push(defaultCollection.id);
 
-    await userDoc.save()
+    await userDoc.save();
 
     const res = await clerkClient.users.updateUser(user.userId, {
       publicMetadata: {
         onboardingComplete: true,
       },
-    })
+    });
 
-    return { message: res.publicMetadata }
+    return { message: res.publicMetadata };
   } catch (err) {
-    console.error("[completeOnboarding]", err)
+    console.error("[completeOnboarding]", err);
 
-    return { error: "Something went wrong!" }
+    return { error: "Something went wrong!" };
   }
 }
