@@ -15,3 +15,4 @@
 - [ ] parallel route
 - [ ] infinite scroll
 - [ ] add collections (folders)
+- [ ] improve onboarding experience

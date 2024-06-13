@@ -1,27 +1,41 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const ImageModel = mongoose.model(
-  "Images",
-  new mongoose.Schema({
-    name: {
-      type: String,
-      required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    collection: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Collection",
-      required: true,
-    },
-  })
-)
+//@ts-ignore
+export interface Image extends mongoose.Document {
+  name: string;
+  url: string;
+  user: string;
+  collection: mongoose.Types.ObjectId;
+  owner: string;
+}
 
-export default mongoose.models.Images || ImageModel
+const imageSchema = new mongoose.Schema<Image>({
+  name: {
+    type: String,
+    required: true,
+  },
+  url: {
+    type: String,
+    required: true,
+  },
+  user: {
+    type: String,
+    ref: "users",
+    required: true,
+  },
+  collection: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Collections",
+    required: true,
+  },
+  owner: {
+    type: String,
+    ref: "users",
+    required: true,
+  },
+});
+
+const ImageModel: mongoose.Model<Image> =
+  mongoose.models.Images || mongoose.model("Images", imageSchema);
+
+export default ImageModel;

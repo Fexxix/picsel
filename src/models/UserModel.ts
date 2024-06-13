@@ -1,25 +1,30 @@
 import mongoose from "mongoose"
 
-const UserModel = mongoose.model(
-  "Users",
-  new mongoose.Schema(
-    {
-      _id: {
-        type: String,
-        required: true,
-        unique: true,
-      },
-      collections: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Collection",
-        },
-      ],
+interface User extends mongoose.Document {
+  _id: string
+  collections: mongoose.Types.ObjectId[]
+}
+
+const UserSchema = new mongoose.Schema<User>(
+  {
+    _id: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    {
-      _id: false,
-    }
-  )
+    collections: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Collections",
+      },
+    ],
+  },
+  {
+    _id: false,
+  }
 )
 
-export default mongoose.models.Users || UserModel
+const UserModel: mongoose.Model<User> =
+  mongoose.models.Users || mongoose.model<User>("Users", UserSchema)
+
+export default UserModel

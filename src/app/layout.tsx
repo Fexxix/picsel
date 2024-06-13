@@ -5,6 +5,8 @@ import { Header } from "@/components/header"
 import { ClerkProvider } from "@clerk/nextjs"
 
 import "./globals.css"
+import { QueryClientProviderWrapper } from "@/components/query-client-provider"
+import { Toaster } from "sonner"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -35,18 +37,21 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={`${inter.className} h-screen`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-            <div className="grid grid-rows-[auto,1fr]">
-              <Header />
-              {children}
+            <div className="grid grid-rows-[auto,1fr] size-full">
+              <QueryClientProviderWrapper>
+                <Header />
+                {children}
+              </QueryClientProviderWrapper>
             </div>
           </ThemeProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

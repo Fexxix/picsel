@@ -12,7 +12,7 @@ import {
 
 export function Header() {
   return (
-    <header className="flex items-center justify-between px-6 py-2 bg-zinc-950 border-b border-b-primary-foreground">
+    <header className="flex items-center justify-between px-6 py-2 bg-white dark:bg-zinc-950 border-b border-b-muted dark:border-b-primary-foreground">
       <Link className="flex items-center gap-2" href="/">
         <Images className="h-6 w-6" />
         <span className="text-lg font-medium">Picsel</span>

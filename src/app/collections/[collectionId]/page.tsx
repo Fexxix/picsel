@@ -1,57 +1,62 @@
-import { getMyCollections } from "@/server/queries";
-import Link from "next/link";
 import {
   Breadcrumb,
-  BreadcrumbItem,
   BreadcrumbList,
+  BreadcrumbItem,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { getCollectionImages, getMyCollections } from "@/server/queries";
 import {
   DropdownMenu,
+  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { AddCollectionFormButton } from "./(components)/add-collection-form-button";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
-import { CollectionCard } from "./(components)/collection-card";
+import Link from "next/link";
+import { ImageUploadButton } from "./(components)/image-upload-button";
+import { MasonryGrid } from "./(components)/masonry-grid";
 
-export default async function Home() {
-  const { userId } = auth();
+export default async function Page({
+  params,
+}: {
+  params: { collectionId: string };
+}) {
+  const { collectionId } = params;
 
-  if (!userId) {
-    return <SignedOut>Please sign in above</SignedOut>;
-  }
-
-  const collections = await getMyCollections();
+  const [collection, collections] = await Promise.all([
+    getCollectionImages(collectionId),
+    getMyCollections(),
+  ]);
 
   return (
-    <SignedIn>
-      <main className="p-4 md:p-6">
-        <div className="flex items-center justify-between">
-          <Breadcrumbs collections={collections} />
-          <AddCollectionFormButton />
-        </div>
-        <section className="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 md:p-6 lg:grid-cols-3 xl:grid-cols-4">
-          {collections.map((collection) => (
-            <CollectionCard key={collection.id} collection={collection} />
-          ))}
-        </section>
-      </main>
-    </SignedIn>
+    <main className="p-4 md:p-6">
+      <div className="flex items-center justify-between pb-2">
+        <Breadcrumbs
+          collections={collections}
+          currentCollectionName={collection.name}
+        />
+        <ImageUploadButton collectionId={collectionId} />
+      </div>
+      <MasonryGrid
+        images={collection.images.map(({ name, url, id }) => ({
+          name,
+          url,
+          id,
+        }))}
+      />
+    </main>
   );
 }
 
 function Breadcrumbs(props: {
   collections: Awaited<ReturnType<typeof getMyCollections>>;
+  currentCollectionName: string;
 }) {
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbPage>Home</BreadcrumbPage>
+          <Link href="/">Home</Link>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
@@ -78,6 +83,7 @@ function Breadcrumbs(props: {
           </DropdownMenu>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
+        <BreadcrumbPage>{props.currentCollectionName}</BreadcrumbPage>
       </BreadcrumbList>
     </Breadcrumb>
   );
