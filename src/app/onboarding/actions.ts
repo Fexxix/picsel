@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import UserModel from "@/models/UserModel";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import CollectionModel from "@/models/CollectionModel";
@@ -27,6 +26,7 @@ export async function completeOnboarding() {
       CollectionModel.create({
         name: "Your Collection",
         images: [],
+        owner: user.userId,
       }),
     ]);
 
